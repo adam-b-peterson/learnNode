@@ -6,21 +6,22 @@ app.get("/", function(req, res){
 });
 
 app.get("/speak/:animal", function(req, res){
-    let animalSound = "";
-    if (req.params.animal == "pig"){
-        animalSound = "'Oink'";
+    let animalSoundsDictionary = {
+        pig: "Oink",
+        cow: "Moo",
+        dog: "Woof Woof!",
+        cat: "I hate you human",
+        goldfish: "..."
     }
-    if (req.params.animal == "cow"){
-        animalSound = "'Moo'";
+    let animal = req.params.animal.toLowerCase();
+    let animalSound = animalSoundsDictionary[animal];
+    if(animalSound != undefined){
+        res.send(`The ${animal} says  '${animalSound}'`);
     }
-    if (req.params.animal == "dog"){
-        animalSound = "'Woof Woof!'";
-    }
-    res.send(`The ${req.params.animal} says ${animalSound}`);
 });
 
 app.get("/repeat/:phrase/:times", function(req, res){
-    let times = parseInt(req.params.times);
+    let times = parseInt(req.params.times); 
     let output = "";
     for (let i = 0; i < times; i++){
         output = output + req.params.phrase + " ";
